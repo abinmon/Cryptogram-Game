@@ -1,6 +1,5 @@
 public class Player{
     private String username;
-    private int score;
     private int totalNumGuesses;
     private int numberCompleted;
     private int numberPlayed;
@@ -17,6 +16,7 @@ public class Player{
     public int getNumberPlayed(){return numberPlayed;}
     public void incrementNumberPlayed(){numberPlayed++;}
     public void incrementTotalGuesses(){totalNumGuesses++;}
+    public int getTotalNumGuesses(){return totalNumGuesses;}
     public int getNumberOfCorrectGuesses(){return numCorrectGuesses;}
     public void incrementNumberOfCorrectGuesses(){numCorrectGuesses++;}
 
@@ -25,12 +25,12 @@ public class Player{
     }
 
     public void displayStats(){
-        System.out.println("Username: " + username);
-        System.out.println("Score: " + score);
-        System.out.println("Number of guesses: " + totalNumGuesses);
-        System.out.println("Number of correct guesses: " + numCorrectGuesses);
-        System.out.println("Number of games played: " + numberPlayed);
-        System.out.println("Number of games completed: " + numberCompleted);
+        System.out.println("Username: " + getUsername());
+        System.out.println("Number of guesses: " + getTotalNumGuesses());
+        System.out.println("Number of correct guesses: " + getNumberOfCorrectGuesses());
+        System.out.println("Accuracy: " + getAccuracy());
+        System.out.println("Number of games played: " + getNumberPlayed());
+        System.out.println("Score : " + getNumberCompleted());
     }
 
 }
