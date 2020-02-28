@@ -12,15 +12,25 @@ public class Player{
     public String getUsername(){return username;}
     public void setUsername(String name) {username = name;}
     public int getNumberCompleted(){return numberCompleted;}
-    public void incrementNumberCompleted(){numberCompleted++;}
     public int getNumberPlayed(){return numberPlayed;}
     public void incrementNumberPlayed(){numberPlayed++;}
     public void incrementTotalGuesses(){totalNumGuesses++;}
     public int getTotalNumGuesses(){return totalNumGuesses;}
     public int getNumberOfCorrectGuesses(){return numCorrectGuesses;}
-    public void incrementNumberOfCorrectGuesses(){numCorrectGuesses++;}
+
+    public void incrementNumberCompleted(){
+        numberCompleted++;
+        numberPlayed++;
+    }
+    public void incrementNumberOfCorrectGuesses(){
+        numCorrectGuesses++;
+        totalNumGuesses++;
+    }
 
     public double getAccuracy(){
+        if(totalNumGuesses == 0){
+            return 0;
+        }
         return ((numCorrectGuesses / totalNumGuesses) * 100);
     }
 
@@ -33,4 +43,10 @@ public class Player{
         System.out.println("Score : " + getNumberCompleted());
     }
 
+    public static void main(String[] args) {
+        Player p = new Player("Big John");
+        p.incrementNumberCompleted();
+        p.incrementNumberOfCorrectGuesses();
+        p.displayStats();
+    }
 }
