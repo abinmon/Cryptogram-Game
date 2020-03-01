@@ -3,10 +3,15 @@ public class Player{
     private int totalNumGuesses;
     private int numberCompleted;
     private int numberPlayed;
+    private double accuracy;
     private int numCorrectGuesses;
 
     public Player(String name){
         username = name;
+        totalNumGuesses = 0;
+        numberCompleted = 0;
+        numberPlayed = 0;
+        numCorrectGuesses = 0;
     }
 
     public String getUsername(){return username;}
@@ -17,7 +22,6 @@ public class Player{
     public void incrementTotalGuesses(){totalNumGuesses++;}
     public int getTotalNumGuesses(){return totalNumGuesses;}
     public int getNumberOfCorrectGuesses(){return numCorrectGuesses;}
-
     public void incrementNumberCompleted(){
         numberCompleted++;
         numberPlayed++;
@@ -27,17 +31,22 @@ public class Player{
         totalNumGuesses++;
     }
 
-    public double getAccuracy(){
-        if(totalNumGuesses == 0){
-            return 0;
+    public void updateAccuracy(double lastRecAccuracy){
+        if(numberPlayed == 1)
+        {
+            accuracy = lastRecAccuracy;
+            return;
         }
-        return ((numCorrectGuesses / totalNumGuesses) * 100);
+        accuracy = (accuracy + lastRecAccuracy) / numberPlayed;
+    }
+    public double getAccuracy()
+    {
+        return accuracy;
     }
 
     public void displayStats(){
         System.out.println("Username: " + getUsername());
         System.out.println("Number of guesses: " + getTotalNumGuesses());
-        System.out.println("Number of correct guesses: " + getNumberOfCorrectGuesses());
         System.out.println("Accuracy: " + getAccuracy());
         System.out.println("Number of games played: " + getNumberPlayed());
         System.out.println("Score : " + getNumberCompleted());
