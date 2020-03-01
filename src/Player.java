@@ -14,6 +14,14 @@ public class Player{
         numCorrectGuesses = 0;
     }
 
+    public Player(String name, int totalGuesses, int numberC, int numberP, int numCorrectGs){
+        username = name;
+        totalNumGuesses = totalGuesses;
+        numberCompleted = numberC;
+        numberPlayed = numberP;
+        numCorrectGuesses = numCorrectGs;
+    }
+
     public String getUsername(){return username;}
     public void setUsername(String name) {username = name;}
     public int getNumberCompleted(){return numberCompleted;}
