@@ -93,4 +93,31 @@ public class Game {
             System.out.println("Typing 1 - to enter a letter.");
             System.out.println("Typing 2 - to removing a letter.");
     }
+    public static void main(String[] args) {
+        boolean exit = false;
+        int choice = 0;
+        Game newGame = new Game();
+        Scanner reader = new Scanner(System.in);
+        System.out.println("Hello");
+        while(!exit) {
+            System.out.println("MAIN MENU");
+            System.out.println("Please choose an option: ");
+            System.out.println("Type 1 to start a game");
+            System.out.println("Type 2 to exit");
+            System.out.println("Type 3 for help");
+            choice = reader.nextInt();
+            switch (choice) {
+                case 1:
+                    newGame.playGame();
+                    break;
+                case 2:
+                    System.exit(0);
+                case 3:
+                    newGame.help();
+                default:
+                    System.out.println("Option " + choice + " is invalid. Please try again!");
+                    break;
+            }
+        }
+    }
 }
