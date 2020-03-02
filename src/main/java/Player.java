@@ -1,3 +1,5 @@
+package main.java;
+
 public class Player{
     private String username;
     private int totalNumGuesses;

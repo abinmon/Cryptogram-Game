@@ -1,3 +1,7 @@
+package main.java;
+
+import main.java.Player;
+
 import java.io.*;
 import java.util.*;
 
@@ -31,7 +35,7 @@ public class Players{
         {
             if(pl.getUsername().equals(newName))
             {
-                System.out.println("Player already exists.");
+                System.out.println("main.java.Player already exists.");
                 return;
             }
         }
