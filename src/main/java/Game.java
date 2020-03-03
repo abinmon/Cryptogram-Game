@@ -53,9 +53,23 @@ public class Game {
     }
 
     private Cryptogram generateCryptogram() { // method to do- shoudl give users 2 options 1 for letter and 2 for numbers based on the option generated the corresponding cryptogram.
-
-            return generateCryptogram();
-
+        boolean input_done = false;
+        while(input_done == false) {
+            System.out.println("Do you want a number or a letter cryptogram. Enter 1 for letter, or 2 for number.");
+            String input = reader.nextLine();
+            if (input == "1") {
+                LetterCyprtogram crypto = new LetterCryptogram();
+                input_done = true;
+            }
+            else if (input == "2") {
+                NumberCyprtogram crypto = new NumberCryptogram();
+                input_done = true;
+            }
+            else {
+                System.out.println("What you entered was neither 1 or 2, please input a valid answer.")
+            }
+        }
+        return crypto;
     }
 
     public void enterLetter() {
