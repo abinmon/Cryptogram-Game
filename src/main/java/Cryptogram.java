@@ -32,9 +32,13 @@ public abstract class Cryptogram {
     {
         return phrase;
     }
+
     public String getEncryptedPhrase() {//method to do- Returns the encrypted phrase.
         return "";
-    }
+    }//method to do
+
+
+
     public abstract void updateProgress(String currentLetter, String currentNumber);
     public abstract void resetProgress();
     public abstract void undo(char c);
