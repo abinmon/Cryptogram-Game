@@ -6,12 +6,14 @@ import java.util.Random;
 
 public class LetterCryptogram extends Cryptogram{
     private HashMap<Character, Character> crypto= new HashMap<>();
+    String phrase;
     public LetterCryptogram(){
-        genarateCryptogram();
+     phrase = super.getPhrase().toLowerCase();
     }
-    private void genarateCryptogram() {
-        String phrase = super.getPhrase().toLowerCase();
-        StringBuilder build =  new StringBuilder();
+
+    @Override
+    public String generateCryptogram() {
+
         Random rand = new Random();
         for(int i = 0 ; i < phrase.length(); i++){
             char characterAtPhrase = phrase.charAt(i);
@@ -27,10 +29,10 @@ public class LetterCryptogram extends Cryptogram{
                 }
             }
         }
-        printMethod(phrase);
+        return printMethod(phrase);
     }
 
-    public void printMethod(String phrase){
+    public String printMethod(String phrase){
         System.out.println();
         String toPrint = "";
         for (int i = 0; i < phrase.length(); i++) {
@@ -43,7 +45,7 @@ public class LetterCryptogram extends Cryptogram{
                 toPrint = toPrint.concat(crypto.get(phrase.charAt(i)) + "");
             }
         }
-        System.out.println(toPrint);
+        return toPrint;
     }
 
 }

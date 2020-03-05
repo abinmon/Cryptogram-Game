@@ -8,25 +8,20 @@ public abstract class Cryptogram {
 
     private String phrase;
     private HashMap<Character, String> progressMap;
+    private  String attempt;
 
-    public Cryptogram(String encryptedPhrase, HashMap<Character, String> progress) {
-        phrase = encryptedPhrase;
+    public Cryptogram(HashMap<Character, String> progress) {
+        phrase = getEncryptedPhrase();
         progressMap = progress;
     }
 
     public Cryptogram() {
-
+        this.phrase = getEncryptedPhrase();
+        attempt = "";
     }
 
-    public char getLetter(int i) {
-        return phrase.charAt(i);
-    }
 
-    public HashMap<Character, String> getProgressMap() {
-        return progressMap;
-    }
-
-    public String getPhrase() {
+    public String getEncryptedPhrase() {
         ArrayList<String> numberOfStrings = new ArrayList<>();
         Random rand = new Random();
         try {
@@ -43,4 +38,35 @@ public abstract class Cryptogram {
         return phrase;
     }
 
+    public String getPhrase(){
+        return phrase;
+    }
+
+    public void changePhrase(String input, int whatPlace) {
+        String change = "";
+
+        for (int i = 0; i < this.getPhrase().length(); i++) {
+            if (this.getPhrase().charAt(i) == this.getPhrase().charAt(whatPlace)) {
+                change = change.concat(input);
+            } else {
+                change = change.concat(getWorkingPhrase().charAt(i) + "");
+            }
+        }
+
+        this.setAttempt(change);
+    }
+
+    public String getWorkingPhrase() {
+        return this.getAttempt();
+    }
+
+    public String getAttempt() {
+        return attempt;
+    }
+    public void setAttempt(String attempt) {
+        this.attempt = attempt;
+    }
+
+    public abstract String generateCryptogram();
+    public abstract String printMethod(String phrase);
 }

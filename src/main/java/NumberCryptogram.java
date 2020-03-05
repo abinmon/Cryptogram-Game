@@ -5,10 +5,9 @@ import java.util.Random;
 public class NumberCryptogram extends Cryptogram{
     private HashMap<Character, Integer> crypto= new HashMap<>();
     public NumberCryptogram(){
-        generateCryptogram();
     }
-
-    private void generateCryptogram() {
+    @Override
+    public String generateCryptogram() {
         String phrase = super.getPhrase().toLowerCase();
         Random rand = new Random();
         for (int i = 0; i < phrase.length(); i++) {
@@ -21,26 +20,32 @@ public class NumberCryptogram extends Cryptogram{
                 crypto.put(characterAtPhrase, encryptNumber);
             }
         }
-        printMethod(phrase);
+        return printMethod(phrase);
     }
-    public void printMethod(String phrase){
+    @Override
+    public String printMethod(String phrase){
         System.out.println();
         String toPrint = "";
         phrase = phrase.toLowerCase();
         for (int i = 0; i < phrase.length(); i++) {
             if (phrase.charAt(i) == ' ') {
-                toPrint = toPrint.concat(" ");
+                toPrint = toPrint.concat("  ");
             }else if(!(phrase.charAt(i) >= 'a' && phrase.charAt(i)<= 'z')){
                 toPrint = toPrint.concat(phrase.charAt(i)+"");
             }
             else {
-                if (!(phrase.charAt(i+1) >= 'a' && phrase.charAt(i)<= 'z')) {
+                if((i+1) >= phrase.length()){
                     toPrint = toPrint.concat(crypto.get(phrase.charAt(i)) + "");
-                } else {
-                    toPrint = toPrint.concat(crypto.get(phrase.charAt(i)) + "-");
+                }
+                else {
+                    if (!(phrase.charAt(i + 1) >= 'a' && phrase.charAt(i) <= 'z')) {
+                        toPrint = toPrint.concat(crypto.get(phrase.charAt(i)) + "");
+                    } else {
+                        toPrint = toPrint.concat(crypto.get(phrase.charAt(i)) + "-");
+                    }
                 }
             }
         }
-        System.out.println(toPrint);
+        return toPrint;
     }
 }
