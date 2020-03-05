@@ -23,6 +23,8 @@ public class Game {
             currentCryptogram = generateCryptogram();
         int choice;
         while (true) {
+
+            System.out.println();
             System.out.println("Type 1 to enter a letter");
             System.out.println("Type 2 to delete a letter");
             System.out.println("Type 3 for help");
@@ -32,15 +34,13 @@ public class Game {
             switch (choice) {
                 case 1:
                     this.enterLetter();
-                    break;
                 case 2:
                     undoLetter();
-                    break;
                 case 3:
                     help();
                 default:
                     System.out.println("Invalid option. Please try again!");
-                    break;
+
             }
         }
     }
@@ -55,7 +55,7 @@ public class Game {
                 input_done = true;
             }
             else if (input == 2) {
-                //currentCryptogram = new NumberCryptogram();
+                currentCryptogram = new NumberCryptogram();
                 input_done = true;
             }
             else {
@@ -67,11 +67,11 @@ public class Game {
     }
 
     public void enterLetter() {
-
+    playGame();
     }
 
     public void undoLetter() {
-
+playGame();
     }
 
 
@@ -80,6 +80,7 @@ public class Game {
             System.out.println("Number description: ");
             System.out.println("Typing 1 - to enter a letter.");
             System.out.println("Typing 2 - to removing a letter.");
+            return;
     }
     public static void main(String[] args) {
         boolean exit = false;
@@ -88,9 +89,7 @@ public class Game {
         Scanner reader = new Scanner(System.in);
         System.out.println("Hello");
         while(!exit) {
-
                     newGame.playGame();
-
         }
     }
 }

@@ -16,7 +16,7 @@ public class LetterCryptogram extends Cryptogram{
         for(int i = 0 ; i < phrase.length(); i++){
             char characterAtPhrase = phrase.charAt(i);
             if(!(crypto.containsKey(characterAtPhrase)) && characterAtPhrase >= 'a' && characterAtPhrase <= 'z'){
-                int shiftNumber = rand.nextInt(26);
+                int shiftNumber = rand.nextInt(25)+1;
                 char encryptedLetter = (char) (characterAtPhrase + shiftNumber);
                 if (encryptedLetter > 'z'){
                     encryptedLetter = (char) (characterAtPhrase - (26 - shiftNumber));
@@ -27,10 +27,23 @@ public class LetterCryptogram extends Cryptogram{
                 }
             }
         }
+        printMethod(phrase);
+    }
 
-        for (Map.Entry<Character, Character> entry : crypto.entrySet()) {
-            System.out.println(entry.getKey()+" : "+entry.getValue());
+    public void printMethod(String phrase){
+        System.out.println();
+        String toPrint = "";
+        for (int i = 0; i < phrase.length(); i++) {
+            if (phrase.charAt(i) == ' ') {
+                toPrint = toPrint.concat(" ");
+            }else if(!(phrase.charAt(i) >= 'a' && phrase.charAt(i)<= 'z')){
+                toPrint = toPrint.concat(phrase.charAt(i)+"");
+            }
+            else {
+                toPrint = toPrint.concat(crypto.get(phrase.charAt(i)) + "");
+            }
         }
+        System.out.println(toPrint);
     }
 
 }
