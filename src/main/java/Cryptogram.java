@@ -1,24 +1,21 @@
 package main.java;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public abstract class Cryptogram {
 
     private String phrase;
-    private HashMap<?,?> symbolMappings;
     private HashMap<Character, String> progressMap;
-    private HashMap<Character, Integer> frequencies;
 
-    public Cryptogram(String encryptedPhrase,HashMap<?,?> mappings, HashMap<Character, String> progress) {
+    public Cryptogram(String encryptedPhrase, HashMap<Character, String> progress) {
         phrase = encryptedPhrase;
-        symbolMappings = mappings;
         progressMap = progress;
     }
 
-    public HashMap<Character, Integer> getFrequencies() { //method to do- get each character and their frequencies
-        return frequencies;
+    public Cryptogram() {
+
     }
 
     public char getLetter(int i) {
@@ -28,19 +25,22 @@ public abstract class Cryptogram {
     public HashMap<Character, String> getProgressMap() {
         return progressMap;
     }
-    public String getPhrase()
-    {
+
+    public String getPhrase() {
+        ArrayList<String> numberOfStrings = new ArrayList<>();
+        Random rand = new Random();
+        try {
+            File myObj = new File("src/resources/phrases.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                numberOfStrings.add(myReader.nextLine());
+            }
+            int size = rand.nextInt(numberOfStrings.size());
+            phrase = numberOfStrings.get(size);
+        } catch (FileNotFoundException e) {
+            System.out.println("File Not found!");
+        }
         return phrase;
     }
 
-    public String getEncryptedPhrase() {//method to do- Returns the encrypted phrase.
-        return "";
-    }//method to do
-
-
-
-    public abstract void updateProgress(String currentLetter, String currentNumber);
-    public abstract void resetProgress();
-    public abstract void undo(char c);
-    public abstract void getOneHint();
 }

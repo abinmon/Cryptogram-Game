@@ -9,20 +9,13 @@ import java.util.StringTokenizer;
 import java.util.Timer;
 
 public class Game {
-    private HashMap<Player, Cryptogram> playerGameMapping;
     private Cryptogram currentCryptogram;
-    private Player currentPlayer;
     Scanner reader;
-    String currentPlayerName;
     String currentLetter;
 
     public Game() {
-        playerGameMapping = new HashMap<Player, Cryptogram>();
-        currentPlayer = new Player("John");
         reader = new Scanner(System.in);
-        currentPlayerName = null;
         currentLetter = null;
-        // currentCryptogram = new Cryptogram();
     }
 
     public void playGame() {
@@ -56,50 +49,31 @@ public class Game {
         boolean input_done = false;
         while(input_done == false) {
             System.out.println("Do you want a number or a letter cryptogram. Enter 1 for letter, or 2 for number.");
-            String input = reader.nextLine();
-            if (input == "1") {
-                LetterCyprtogram crypto = new LetterCryptogram();
+            int input = reader.nextInt();
+            if (input == 1) {
+                currentCryptogram = new LetterCryptogram();
                 input_done = true;
             }
-            else if (input == "2") {
-                NumberCyprtogram crypto = new NumberCryptogram();
+            else if (input == 2) {
+                //currentCryptogram = new NumberCryptogram();
                 input_done = true;
             }
             else {
-                System.out.println("What you entered was neither 1 or 2, please input a valid answer.")
+                System.out.println("What you entered was neither 1 or 2, please input a valid answer.");
+                return generateCryptogram();
             }
         }
-        return crypto;
+        return currentCryptogram;
     }
 
     public void enterLetter() {
-        try {
-            System.out.println("Enter a number in the cryptogram");
-            String currentNumber = reader.next();
-            System.out.println("Enter a letter: ");
-            currentLetter = reader.next();
-            if (currentCryptogram.getPhrase().contains(currentLetter)) {
-                // find index of all of these letters in the cryptogram and
-                // replace the instances of it
-                currentCryptogram.updateProgress(currentLetter, currentNumber);
-            } else {
-                System.out.println("This letter is not present!");
-            }
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input. Please try again.");
-        }
 
     }
 
     public void undoLetter() {
-        System.out.println("Which letter would you like to Undo: ");
-        currentLetter = reader.next();
-        currentCryptogram.undo(currentLetter.charAt(0));
+
     }
 
-    public void viewFrequencies() {
-        System.out.println("Frequencies: " + currentCryptogram.getFrequencies());
-    }
 
     public void help() {
         System.out.println("Help Section");
@@ -114,24 +88,9 @@ public class Game {
         Scanner reader = new Scanner(System.in);
         System.out.println("Hello");
         while(!exit) {
-            System.out.println("MAIN MENU");
-            System.out.println("Please choose an option: ");
-            System.out.println("Type 1 to start a game");
-            System.out.println("Type 2 to exit");
-            System.out.println("Type 3 for help");
-            choice = reader.nextInt();
-            switch (choice) {
-                case 1:
+
                     newGame.playGame();
-                    break;
-                case 2:
-                    System.exit(0);
-                case 3:
-                    newGame.help();
-                default:
-                    System.out.println("Option " + choice + " is invalid. Please try again!");
-                    break;
-            }
+
         }
     }
 }
