@@ -1,6 +1,7 @@
 package main.java;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class LetterCryptogram extends Cryptogram{
@@ -20,20 +21,16 @@ public class LetterCryptogram extends Cryptogram{
                 if (encryptedLetter > 'z'){
                     encryptedLetter = (char) (characterAtPhrase - (26 - shiftNumber));
                     crypto.put(characterAtPhrase, encryptedLetter);
-                    if(Character.isLetter(characterAtPhrase)) {
-                        build.append(encryptedLetter);
-                    }
-                    else{
-                        build.append(' ');
-                    }
                 }
                 else{
                     crypto.put(characterAtPhrase, encryptedLetter);
                 }
-                build.append(encryptedLetter);
             }
         }
-        System.out.println(build);
+
+        for (Map.Entry<Character, Character> entry : crypto.entrySet()) {
+            System.out.println(entry.getKey()+" : "+entry.getValue());
+        }
     }
 
 }
