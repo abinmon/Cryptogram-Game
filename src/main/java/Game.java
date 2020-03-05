@@ -55,7 +55,7 @@ public class Game {
                 input_done = true;
             }
             else if (input == 2) {
-                //currentCryptogram = new NumberCryptogram();
+                currentCryptogram = new NumberCryptogram();
                 input_done = true;
             }
             else {
@@ -67,7 +67,9 @@ public class Game {
     }
 
     public void enterLetter() {
-
+        Scanner input = new Scanner(System.in);
+        currentLetter = input.nextLine();
+        System.out.println("current letter = " + currentLetter);
     }
 
     public void undoLetter() {
