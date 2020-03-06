@@ -14,10 +14,10 @@ public class LetterCryptogram extends Cryptogram{
     @Override
     public String generateCryptogram() {
         Random rand = new Random();
+        int shiftNumber = rand.nextInt(25)+1;
         for(int i = 0 ; i < phrase.length(); i++){
             char characterAtPhrase = phrase.charAt(i);
             if(!(crypto.containsKey(characterAtPhrase)) && characterAtPhrase >= 'a' && characterAtPhrase <= 'z'){
-                int shiftNumber = rand.nextInt(25)+1;
                 char encryptedLetter = (char) (characterAtPhrase + shiftNumber);
                 if (encryptedLetter > 'z'){
                     encryptedLetter = (char) (characterAtPhrase - (26 - shiftNumber));

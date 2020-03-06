@@ -36,7 +36,8 @@ public class Game {
                 System.out.println();
                 printDisplay(currentCryptogram.getWorkingPhrase(), whatPlace);
                 help();
-                choice = input.nextInt();
+                Scanner reader = new Scanner(System.in);
+                choice = reader.nextInt();
                 System.out.println("You have chosen " + choice);
                 switch (choice) {
                     case 1:
@@ -80,6 +81,7 @@ public class Game {
             currentCryptogram = null;
         }
         catch (InputMismatchException e) {
+            System.out.println("Invalid input");
             System.out.println(e);
         }
     }
