@@ -1,53 +1,38 @@
 package main.java;
-import java.io.*;
-import java.util.Random;
-import java.util.HashMap;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
-import java.util.StringTokenizer;
-import java.util.Timer;
 
 public class Game {
     private Cryptogram currentCryptogram;
-    Scanner reader;
-    String currentLetter;
+    private Scanner input;
+    private String currentLetter;
 
-    public Game() {
-        reader = new Scanner(System.in);
+    private Game() {
+        input = new Scanner(System.in);
         currentLetter = null;
     }
 
-    public void playGame() {
-        String r = "";
+    private void playGame() {
         int whatPlace = 0;
         if (currentCryptogram == null)
             currentCryptogram = generateCryptogram1();
-        String print = currentCryptogram.generateCryptogram();
-        String x = currentCryptogram.getAttempt();
-
+        String printCrypto = currentCryptogram.generateCryptogram();
         int choice;
         try {
             while (true) {
                 System.out.println();
-                System.out.println(print);
+                System.out.println(printCrypto);
                 System.out.println();
                 printDisplay(currentCryptogram.getWorkingPhrase(), whatPlace);
-                System.out.println("Type 1 to enter a letter");
-                System.out.println("Type 2 to delete a letter");
-                System.out.println("Type 3 for help");
-                System.out.println("Type 4 to move forward");
-                System.out.println("Type 5 to move backward");
-                System.out.print("Which option would you like? ");
-
-                choice = reader.nextInt();
+                help();
+                choice = input.nextInt();
                 System.out.println("You have chosen " + choice);
                 switch (choice) {
                     case 1:
                         this.enterLetter(whatPlace);
                         break;
                     case 2:
-                        undoLetter();
+                        undoLetter(whatPlace);
                         break;
                     case 3:
                         help();
@@ -68,6 +53,7 @@ public class Game {
                         }
                         break;
                     case 6:
+                        System.exit(0);
                         break;
                     default:
                         System.out.println("Invalid option. Please try again!");
@@ -78,7 +64,7 @@ public class Game {
             }
         }
         catch (InputMismatchException e) {
-        System.out.println(e);
+            System.out.println(e);
         }
     }
 
@@ -92,16 +78,15 @@ public class Game {
 
     private Cryptogram generateCryptogram1() {
         boolean input_done = false;
-        String s = "";
         while(!input_done) {
             System.out.println("Do you want a number or a letter cryptogram. Enter 1 for letter, or 2 for number.");
-            int input = reader.nextInt();
-            if (input == 1) {
+            int userInput = input.nextInt();
+            if (userInput == 1) {
                 currentCryptogram = new LetterCryptogram();
                 currentCryptogram.setAttempt(currentCryptogram.getPhrase().toLowerCase().replaceAll("[a-z]", "#"));
                 input_done = true;
             }
-            else if (input == 2) {
+            else if (userInput == 2) {
                 currentCryptogram = new NumberCryptogram();
                 currentCryptogram.setAttempt(currentCryptogram.getPhrase().toLowerCase().replaceAll("[a-z]", "#"));
                 input_done = true;
@@ -114,37 +99,39 @@ public class Game {
         return currentCryptogram;
     }
 
-    public void enterLetter(int whatLetter) {
-        Scanner input = new Scanner(System.in);
-        currentLetter = input.nextLine();
+    private void enterLetter(int whatLetter) {
+        Scanner reader = new Scanner(System.in);
+        currentLetter = reader.nextLine().toLowerCase();
         System.out.println("current letter = " + currentLetter);
         if (currentLetter.length()==1) {
             currentCryptogram.changePhrase(currentLetter, whatLetter);
         }
+        else{
+            System.out.println("You did not enter a single letter.");
+        }
     }
 
-    public void undoLetter() {
-
+    private void undoLetter(int whatLetter) {
+        System.out.println("Deleting letter: " + whatLetter);
+        currentCryptogram.changePhrase("#", whatLetter);
     }
 
 
-    public void help() {
+    private void help() {
         System.out.println("Help Section");
             System.out.println("Number description: ");
             System.out.println("Typing 1 - to enter a letter.");
             System.out.println("Typing 2 - to removing a letter.");
-            System.out.println("Typing 3 - for help.");
             System.out.println("Typing 4 - to move forward");
             System.out.println("Typing 5 - to move backwards.");
+            System.out.println("Typing 6 - to quit.");
+            System.out.println("Which option would you like.");
     }
+
     public static void main(String[] args) {
-        boolean exit = false;
         Game newGame = new Game();
-        Scanner reader = new Scanner(System.in);
         System.out.println("Hello");
-        while(true) {
-            newGame.playGame();
-        }
+        newGame.playGame();
     }
 
 
