@@ -61,11 +61,4 @@ public class Player{
         System.out.println("Number of games played: " + getNumberPlayed());
         System.out.println("Score : " + getNumberCompleted());
     }
-
-    public static void main(String[] args) {
-        Player p = new Player("Big John");
-        p.incrementNumberCompleted();
-        p.incrementNumberOfCorrectGuesses();
-        p.displayStats();
-    }
 }

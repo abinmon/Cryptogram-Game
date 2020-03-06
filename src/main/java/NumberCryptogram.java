@@ -3,12 +3,15 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class NumberCryptogram extends Cryptogram{
-    private HashMap<Character, Integer> crypto= new HashMap<>();
+    private HashMap<Character, Integer> crypto;
+    private String phrase;
+
     public NumberCryptogram(){
+        crypto = new HashMap<>();
+        phrase = super.getPhrase().toLowerCase();
     }
     @Override
     public String generateCryptogram() {
-        String phrase = super.getPhrase().toLowerCase();
         Random rand = new Random();
         for (int i = 0; i < phrase.length(); i++) {
             char characterAtPhrase = phrase.charAt(i);

@@ -1,19 +1,18 @@
 package main.java;
-
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class LetterCryptogram extends Cryptogram{
-    private HashMap<Character, Character> crypto= new HashMap<>();
+    private HashMap<Character, Character> crypto;
     String phrase;
+
     public LetterCryptogram(){
-     phrase = super.getPhrase().toLowerCase();
+        crypto = new HashMap<>();
+        phrase = super.getPhrase().toLowerCase();
     }
 
     @Override
     public String generateCryptogram() {
-
         Random rand = new Random();
         for(int i = 0 ; i < phrase.length(); i++){
             char characterAtPhrase = phrase.charAt(i);
