@@ -18,57 +18,69 @@ public class Game {
             currentCryptogram = generateCryptogram1();
         String printCrypto = currentCryptogram.generateCryptogram();
         int choice;
-        try {
-            while (true) {
-                System.out.println();
-                System.out.println(printCrypto);
-                System.out.println();
-                printDisplay(currentCryptogram.getWorkingPhrase(), whatPlace);
-                help();
-                Scanner reader = new Scanner(System.in);
-                choice = reader.nextInt();
-                System.out.println("You have chosen " + choice);
-                switch (choice) {
-                    case 1:
-                        this.enterLetter(whatPlace);
-                        break;
-                    case 2:
-                        undoLetter(whatPlace);
-                        break;
-                    case 3:
-                        help();
-                    case 4: // Move the cursor Forward
-                        if (whatPlace >= currentCryptogram.getWorkingPhrase().length() - 1) {
-                            whatPlace = 0;
-                        } else {
-                            whatPlace = currentCryptogram.getWorkingPhrase().charAt(whatPlace + 1) == ' ' ?
-                                    whatPlace + 2 : whatPlace + 1;
-                        }
-                        break;
-                    case 5: // Move the cursor backwards
-                        if (whatPlace == 0) {
-                            whatPlace = (currentCryptogram.getWorkingPhrase().length() - 1);
-                        } else {
-                            whatPlace = currentCryptogram.getWorkingPhrase().charAt(whatPlace - 1) == ' ' ?
-                                    whatPlace - 2 : whatPlace - 1;
-                        }
-                        break;
-                    case 6:
-                        System.exit(0);
-                        break;
-                    default:
-                        System.out.println("Invalid option. Please try again!");
-                        break;
-                }
 
+            while (true) {
+                try {
+
+                    System.out.println(printCrypto);
+                    System.out.println();
+                    printDisplay(currentCryptogram.getWorkingPhrase(), whatPlace);
+                    help();
+                    Scanner reader = new Scanner(System.in);
+                    choice = reader.nextInt();
+                    System.out.println("You have chosen " + choice);
+                    switch (choice) {
+                        case 1:
+                            this.enterLetter(whatPlace);
+                            break;
+                        case 2:
+                            undoLetter(whatPlace);
+                            break;
+                        case 3:
+                            help();
+                        case 4: // Move the cursor Forward
+                            if (whatPlace >= currentCryptogram.getWorkingPhrase().length() - 1) {
+                                whatPlace = 0;
+                            }
+                            else {
+                                if(currentCryptogram.getWorkingPhrase().charAt(whatPlace + 1) == ' '){
+                                    whatPlace = whatPlace + 2;
+                                }
+                                else{
+                                   whatPlace = whatPlace + 1;
+                                }
+                            }
+                            break;
+                        case 5: // Move the cursor backwards
+                            if (whatPlace == 0) {
+                                whatPlace = (currentCryptogram.getWorkingPhrase().length() - 1);
+                            }
+                            else {
+                                if(currentCryptogram.getWorkingPhrase().charAt(whatPlace - 1) == ' '){
+                                    whatPlace = whatPlace - 2;
+                                }
+                                else{
+                                    whatPlace = whatPlace - 1;
+                                 }
+                            }
+                            break;
+                        case 6:
+                            System.exit(0);
+                            break;
+                        default:
+                            System.out.println("Invalid option. Please try again!");
+                            break;
+                    }
+
+
+                } catch (InputMismatchException e) {
+                    System.out.println();
+                    System.out.println("=================Invalid option. Please try again!==============================");
+                    break;
+                }
 
             }
         }
-        catch (InputMismatchException e) {
-
-            System.out.println("Invalid option. Please try again!");
-        }
-    }
 
     private static void printDisplay(String phrase, int whatPlace) {
         System.out.println(phrase);
@@ -81,21 +93,26 @@ public class Game {
     private Cryptogram generateCryptogram1() {
         boolean input_done = false;
         while(!input_done) {
-            System.out.println("Do you want a number or a letter cryptogram. Enter 1 for letter, or 2 for number.");
-            int userInput = input.nextInt();
-            if (userInput == 1) {
-                currentCryptogram = new LetterCryptogram();
-                currentCryptogram.setAttempt(currentCryptogram.getPhrase().toLowerCase().replaceAll("[a-z]", "#"));
-                input_done = true;
-            }
-            else if (userInput == 2) {
-                currentCryptogram = new NumberCryptogram();
-                currentCryptogram.setAttempt(currentCryptogram.getPhrase().toLowerCase().replaceAll("[a-z]", "#"));
-                input_done = true;
-            }
-            else {
-                System.out.println("What you entered was neither 1 or 2, please input a valid answer.");
-                return generateCryptogram1();
+            try {
+                System.out.println("Do you want a number or a letter cryptogram. Enter 1 for letter, or 2 for number.");
+                int userInput = input.nextInt();
+                if (userInput == 1) {
+                    currentCryptogram = new LetterCryptogram();
+                    currentCryptogram.setAttempt(currentCryptogram.getPhrase().toLowerCase().replaceAll("[a-z]", "#"));
+                    input_done = true;
+                } else if (userInput == 2) {
+                    currentCryptogram = new NumberCryptogram();
+                    currentCryptogram.setAttempt(currentCryptogram.getPhrase().toLowerCase().replaceAll("[a-z]", "#"));
+                    input_done = true;
+                } else {
+                    System.out.println("What you entered was neither 1 or 2, please input a valid answer.");
+                    return generateCryptogram1();
+                }
+            } catch (InputMismatchException e) {
+                System.out.println();
+                System.out.println("=================Invalid option. Please try again!==============================");
+                break;
+
             }
         }
         return currentCryptogram;
@@ -132,10 +149,14 @@ public class Game {
 
     public static void main(String[] args) {
         Game newGame = new Game();
+        boolean exit = false;
         System.out.println("Hello");
-        while(true) {
-            newGame.playGame();
-        }
+
+            while (true) {
+                newGame.playGame();
+            }
+
+
     }
 
 
