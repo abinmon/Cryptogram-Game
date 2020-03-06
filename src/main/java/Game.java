@@ -14,30 +14,18 @@ public class Game {
 
     private void playGame() {
         int whatPlace = 0;
-        if (currentCryptogram == null) {
+        if (currentCryptogram == null)
             currentCryptogram = generateCryptogram1();
-        }
         String printCrypto = currentCryptogram.generateCryptogram();
         int choice;
         try {
             while (true) {
-                if(!currentCryptogram.getWorkingPhrase().contains("#")){
-                    if(currentCryptogram.getWorkingPhrase().equals(currentCryptogram.getPhrase())){
-                        System.out.println();
-                        System.out.println("Well done");
-                        break;
-                    }
-                    else{
-                        System.out.println("You got the phrase wrong.");
-                    }
-                }
                 System.out.println();
                 System.out.println(printCrypto);
                 System.out.println();
                 printDisplay(currentCryptogram.getWorkingPhrase(), whatPlace);
                 help();
-                Scanner reader = new Scanner(System.in);
-                choice = reader.nextInt();
+                choice = input.nextInt();
                 System.out.println("You have chosen " + choice);
                 switch (choice) {
                     case 1:
@@ -71,17 +59,11 @@ public class Game {
                         System.out.println("Invalid option. Please try again!");
                         break;
                 }
+
+
             }
-            System.out.println();
-            System.out.println("Would you like to play another game. Enter 1 for yes, anything else for no.");
-            Scanner reader = new Scanner(System.in);
-            if(reader.nextInt() != 1){
-                System.exit(0);
-            }
-            currentCryptogram = null;
         }
         catch (InputMismatchException e) {
-            System.out.println("Invalid input");
             System.out.println(e);
         }
     }
@@ -137,20 +119,20 @@ public class Game {
 
     private void help() {
         System.out.println("Help Section");
-        System.out.println("Number description: ");
-        System.out.println("Typing 1 - to enter a letter.");
-        System.out.println("Typing 2 - to removing a letter.");
-        System.out.println("Typing 4 - to move forward");
-        System.out.println("Typing 5 - to move backwards.");
-        System.out.println("Typing 6 - to quit.");
-        System.out.println("Which option would you like.");
+            System.out.println("Number description: ");
+            System.out.println("Typing 1 - to enter a letter.");
+            System.out.println("Typing 2 - to removing a letter.");
+            System.out.println("Typing 4 - to move forward");
+            System.out.println("Typing 5 - to move backwards.");
+            System.out.println("Typing 6 - to quit.");
+            System.out.println("Which option would you like.");
     }
 
     public static void main(String[] args) {
         Game newGame = new Game();
         System.out.println("Hello");
-        while(true) {
-            newGame.playGame();
-        }
+        newGame.playGame();
     }
+
+
 }
