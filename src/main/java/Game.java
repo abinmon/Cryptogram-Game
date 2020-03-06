@@ -14,12 +14,23 @@ public class Game {
 
     private void playGame() {
         int whatPlace = 0;
-        if (currentCryptogram == null)
+        if (currentCryptogram == null) {
             currentCryptogram = generateCryptogram1();
+        }
         String printCrypto = currentCryptogram.generateCryptogram();
         int choice;
         try {
             while (true) {
+                if(!currentCryptogram.getWorkingPhrase().contains("#")){
+                    if(currentCryptogram.getWorkingPhrase().equals(currentCryptogram.getPhrase())){
+                        System.out.println();
+                        System.out.println("Well done");
+                        break;
+                    }
+                    else{
+                        System.out.println("You got the phrase wrong.");
+                    }
+                }
                 System.out.println();
                 System.out.println(printCrypto);
                 System.out.println();
@@ -59,9 +70,14 @@ public class Game {
                         System.out.println("Invalid option. Please try again!");
                         break;
                 }
-
-
             }
+            System.out.println();
+            System.out.println("Would you like to play another game. Enter 1 for yes, anything else for no.");
+            Scanner reader = new Scanner(System.in);
+            if(reader.nextInt() != 1){
+                System.exit(0);
+            }
+            currentCryptogram = null;
         }
         catch (InputMismatchException e) {
             System.out.println(e);
@@ -131,8 +147,8 @@ public class Game {
     public static void main(String[] args) {
         Game newGame = new Game();
         System.out.println("Hello");
-        newGame.playGame();
+        while(true) {
+            newGame.playGame();
+        }
     }
-
-
 }
