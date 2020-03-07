@@ -140,21 +140,31 @@ public class Game {
 
 
     private void enterLetter(int whatLetter) {
-        if(helpCheck(whatLetter)){
+        boolean check = helpCheck(whatLetter);
+        if(check){
             System.out.println("What would you like to overwrite with?");
+            enterLetterHelper(whatLetter);
         }
+        else if((currentCryptogram.getWorkingPhrase().charAt(whatLetter) == '#')){
+            System.out.println("What letter would you like to enter?");
+            enterLetterHelper(whatLetter);
+        }
+        else{
+           return;
+         }
+    }
+    private void enterLetterHelper(int whatLetter){
         Scanner reader = new Scanner(System.in);
         currentLetter = reader.next().toLowerCase();
         char c = currentLetter.charAt(0);
         System.out.println("current letter = " + currentLetter);
-        if(currentCryptogram.getCrypto().containsKey(c)){
-            if (currentLetter.length()==1) {
-                if(!letterCheck()) {
+        if (currentCryptogram.getCrypto().containsKey(c)) {
+            if (currentLetter.length() == 1) {
+                if (!letterCheck()) {
                     alreadyInput.add(currentLetter);
                     currentCryptogram.changePhrase(currentLetter, whatLetter);
                 }
-            }
-            else{
+            } else {
                 System.out.println("You did not enter a single letter.");
             }
         }
@@ -163,22 +173,27 @@ public class Game {
             System.out.println("That letter is not in the phrase! Try Again!");
             System.out.println();
         }
-
     }
 
     private void undoLetter(int whatLetter) {
         currentCryptogram.changePhrase("#", whatLetter);
         alreadyInput.remove(currentLetter);
     }
+
     private Boolean helpCheck(int whatLetter){
-        boolean ty = false;
+        boolean check = false;
         if(!(currentCryptogram.getWorkingPhrase().charAt(whatLetter) == '#')){
             System.out.println("Would you like to overwrite? type 1 for yes or 2 for no");
             Scanner i = new Scanner(System.in);
             int a = i.nextInt();
-            ty = a == 1;
+            if(a == 1){
+                check = true;
+            }
+            else{
+                check = false;
+            }
         }
-        return ty;
+        return check;
     }
 
 
@@ -199,7 +214,6 @@ public class Game {
             if(alreadyInput.get(i).contains(currentLetter)){
                 alreadyEntered = true;
                 System.out.println("You have already entered this letter, please try again");
-
             }
             else{
                 alreadyEntered = false;
