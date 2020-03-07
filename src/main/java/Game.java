@@ -1,5 +1,6 @@
 package main.java;
 import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -8,10 +9,12 @@ public class Game {
     private Cryptogram currentCryptogram;
     private Scanner input;
     private String currentLetter;
+    private ArrayList<String> alreadyInput;
 
     private Game() {
         input = new Scanner(System.in);
         currentLetter = null;
+        alreadyInput = new ArrayList<>();
     }
 
     private void playGame() {
@@ -20,75 +23,75 @@ public class Game {
             currentCryptogram = cryptogramChoice();
         String printCrypto = currentCryptogram.generateCryptogram();
         int choice;
-            while (true) {
-                try {
-                    if(!currentCryptogram.getWorkingPhrase().contains("#")){
-                        if(currentCryptogram.getWorkingPhrase().equals(currentCryptogram.getPhrase())){
-                            System.out.println();
-                            System.out.println("Well done");
-                            break;
-                        }
-                        else{
-                            System.out.println("You got the phrase wrong.");
-                        }
+        while (true) {
+            try {
+                if(!currentCryptogram.getWorkingPhrase().contains("#")){
+                    if(currentCryptogram.getWorkingPhrase().equals(currentCryptogram.getPhrase())){
+                        System.out.println();
+                        System.out.println("Well done");
+                        break;
                     }
-                    System.out.println(printCrypto);
-                    System.out.println("=======================");
-                    printDisplay(currentCryptogram.getWorkingPhrase(), whatPlace);
-                    help();
-                    Scanner reader = new Scanner(System.in);
-                    choice = reader.nextInt();
-                    System.out.println("You have chosen " + choice);
-
-                    switch (choice) {
-                        case 1:
-                            this.enterLetter(whatPlace);
-                            break;
-                        case 2:
-                            undoLetter(whatPlace);
-                            break;
-                        case 3:
-                            help();
-                        case 4: // Move the cursor Forward
-                            if (whatPlace >= currentCryptogram.getWorkingPhrase().length() - 1) {
-                                whatPlace = 0;
-                            }
-                            else {
-                                if(currentCryptogram.getWorkingPhrase().charAt(whatPlace + 1) == ' '){
-                                    whatPlace = whatPlace + 2;
-                                }
-                                else{
-                                   whatPlace = whatPlace + 1;
-                                }
-                            }
-                            break;
-                        case 5: // Move the cursor backwards
-                            if (whatPlace == 0) {
-                                whatPlace = (currentCryptogram.getWorkingPhrase().length() - 1);
-                            }
-                            else {
-                                if(currentCryptogram.getWorkingPhrase().charAt(whatPlace - 1) == ' '){
-                                    whatPlace = whatPlace - 2;
-                                }
-                                else{
-                                    whatPlace = whatPlace - 1;
-                                 }
-                            }
-                            break;
-                        case 6:
-                            System.out.println("Thanks for playing! GoodBye!");
-                            System.exit(0);
-                            break;
-                        default:
-                            System.out.println("Invalid option. Please try again!");
-                            break;
+                    else{
+                        System.out.println("You got the phrase wrong.");
                     }
-                } catch (InputMismatchException e) {
-                    System.out.println();
-                    System.out.println("=================Invalid option. Please try again!==============================");
                 }
+                System.out.println(printCrypto);
+                System.out.println("=======================");
+                printDisplay(currentCryptogram.getWorkingPhrase(), whatPlace);
+                help();
+                Scanner reader = new Scanner(System.in);
+                choice = reader.nextInt();
+                System.out.println("You have chosen " + choice);
 
+                switch (choice) {
+                    case 1:
+                        this.enterLetter(whatPlace);
+                        break;
+                    case 2:
+                        undoLetter(whatPlace);
+                        break;
+                    case 3:
+                        help();
+                    case 4: // Move the cursor Forward
+                        if (whatPlace >= currentCryptogram.getWorkingPhrase().length() - 1) {
+                            whatPlace = 0;
+                        }
+                        else {
+                            if(currentCryptogram.getWorkingPhrase().charAt(whatPlace + 1) == ' '){
+                                whatPlace = whatPlace + 2;
+                            }
+                            else{
+                                whatPlace = whatPlace + 1;
+                            }
+                        }
+                        break;
+                    case 5: // Move the cursor backwards
+                        if (whatPlace == 0) {
+                            whatPlace = (currentCryptogram.getWorkingPhrase().length() - 1);
+                        }
+                        else {
+                            if(currentCryptogram.getWorkingPhrase().charAt(whatPlace - 1) == ' '){
+                                whatPlace = whatPlace - 2;
+                            }
+                            else{
+                                whatPlace = whatPlace - 1;
+                            }
+                        }
+                        break;
+                    case 6:
+                        System.out.println("Thanks for playing! GoodBye!");
+                        System.exit(0);
+                        break;
+                    default:
+                        System.out.println("Invalid option. Please try again!");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println();
+                System.out.println("=================Invalid option. Please try again!==============================");
             }
+
+        }
         System.out.println();
         System.out.println("Would you like to play another game. Enter 1 for yes, anything else for no.");
         Scanner reader = new Scanner(System.in);
@@ -146,7 +149,10 @@ public class Game {
         System.out.println("current letter = " + currentLetter);
         if(currentCryptogram.getCrypto().containsKey(c)){
             if (currentLetter.length()==1) {
-                currentCryptogram.changePhrase(currentLetter, whatLetter);
+                if(!letterCheck()) {
+                    alreadyInput.add(currentLetter);
+                    currentCryptogram.changePhrase(currentLetter, whatLetter);
+                }
             }
             else{
                 System.out.println("You did not enter a single letter.");
@@ -162,6 +168,7 @@ public class Game {
 
     private void undoLetter(int whatLetter) {
         currentCryptogram.changePhrase("#", whatLetter);
+        alreadyInput.remove(currentLetter);
     }
     private Boolean helpCheck(int whatLetter){
         boolean ty = false;
@@ -177,13 +184,29 @@ public class Game {
 
     private void help() {
         System.out.println("Help Section");
-            System.out.println("Number description: ");
-            System.out.println("Typing 1 - to enter a letter.");
-            System.out.println("Typing 2 - to removing a letter.");
-            System.out.println("Typing 4 - to move forward");
-            System.out.println("Typing 5 - to move backwards.");
-            System.out.println("Typing 6 - to quit.");
-            System.out.println("Which option would you like.");
+        System.out.println("Number description: ");
+        System.out.println("Typing 1 - to enter a letter.");
+        System.out.println("Typing 2 - to removing a letter.");
+        System.out.println("Typing 4 - to move forward");
+        System.out.println("Typing 5 - to move backwards.");
+        System.out.println("Typing 6 - to quit.");
+        System.out.println("Which option would you like.");
+    }
+
+    private boolean letterCheck(){
+        boolean alreadyEntered = false;
+        for(int i = 0; i < alreadyInput.size(); i++){
+            if(alreadyInput.get(i).contains(currentLetter)){
+                alreadyEntered = true;
+                System.out.println("You have already entered this letter, please try again");
+
+            }
+            else{
+                alreadyEntered = false;
+            }
+        }
+
+        return alreadyEntered;
     }
 
     public static void main(String[] args) {
@@ -191,10 +214,12 @@ public class Game {
         boolean exit = false;
         System.out.println("Hello");
 
-            while (true) newGame.playGame();
+        while (true) newGame.playGame();
 
 
     }
+
+
 
 
 }
