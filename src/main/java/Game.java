@@ -18,10 +18,8 @@ public class Game {
             currentCryptogram = generateCryptogram1();
         String printCrypto = currentCryptogram.generateCryptogram();
         int choice;
-
             while (true) {
                 try {
-
                     System.out.println(printCrypto);
                     System.out.println();
                     printDisplay(currentCryptogram.getWorkingPhrase(), whatPlace);
@@ -152,9 +150,7 @@ public class Game {
         boolean exit = false;
         System.out.println("Hello");
 
-            while (true) {
-                newGame.playGame();
-            }
+            while (true) newGame.playGame();
 
 
     }

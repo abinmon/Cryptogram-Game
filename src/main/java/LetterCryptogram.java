@@ -4,19 +4,21 @@ import java.util.Random;
 
 public class LetterCryptogram extends Cryptogram{
     private HashMap<Character, Character> crypto;
-    String phrase;
+    private String Originalphrase;
+    private String encryptedPhrase;
+
 
     public LetterCryptogram(){
         crypto = new HashMap<>();
-        phrase = super.getPhrase().toLowerCase();
+        Originalphrase = super.getPhraseForEncryption().toLowerCase();
     }
 
     @Override
     public String generateCryptogram() {
         Random rand = new Random();
         int shiftNumber = rand.nextInt(25)+1;
-        for(int i = 0 ; i < phrase.length(); i++){
-            char characterAtPhrase = phrase.charAt(i);
+        for(int i = 0 ; i < Originalphrase.length(); i++){
+            char characterAtPhrase = Originalphrase.charAt(i);
             if(!(crypto.containsKey(characterAtPhrase)) && characterAtPhrase >= 'a' && characterAtPhrase <= 'z'){
                 char encryptedLetter = (char) (characterAtPhrase + shiftNumber);
                 if (encryptedLetter > 'z'){
@@ -28,7 +30,7 @@ public class LetterCryptogram extends Cryptogram{
                 }
             }
         }
-        return printMethod(phrase);
+        return printMethod(Originalphrase);
     }
 
     public String printMethod(String phrase){
@@ -44,7 +46,20 @@ public class LetterCryptogram extends Cryptogram{
                 toPrint = toPrint.concat(crypto.get(phrase.charAt(i)) + "");
             }
         }
+        setEncrypted(toPrint);
         return toPrint;
+    }
+
+    @Override
+    public String getPhraseForEncryption() {
+        return super.getPhraseForEncryption();
+    }
+
+    public String getEnryptedPhrase(){
+        return encryptedPhrase;
+    }
+    public void setEncrypted(String encrypted){
+        encryptedPhrase = encrypted;
     }
 
 }

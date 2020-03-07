@@ -11,17 +11,17 @@ public abstract class Cryptogram {
     private  String attempt;
 
     public Cryptogram(HashMap<Character, String> progress) {
-        phrase = getEncryptedPhrase();
+        phrase = getPhraseForEncryption();
         progressMap = progress;
     }
 
     public Cryptogram() {
-        this.phrase = getEncryptedPhrase();
+        this.phrase = getPhraseForEncryption();
         attempt = "";
     }
 
 
-    public String getEncryptedPhrase() {
+    public String getPhraseForEncryption() {
         ArrayList<String> numberOfStrings = new ArrayList<>();
         Random rand = new Random();
         try {
@@ -44,7 +44,6 @@ public abstract class Cryptogram {
 
     public void changePhrase(String input, int whatPlace) {
         String change = "";
-
         for (int i = 0; i < this.getPhrase().length(); i++) {
             if (this.getPhrase().charAt(i) == this.getPhrase().charAt(whatPlace)) {
                 change = change.concat(input);
@@ -52,7 +51,6 @@ public abstract class Cryptogram {
                 change = change.concat(getWorkingPhrase().charAt(i) + "");
             }
         }
-
         this.setAttempt(change);
     }
 
