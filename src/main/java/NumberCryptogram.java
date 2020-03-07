@@ -53,6 +53,12 @@ public class NumberCryptogram extends Cryptogram{
         setEncrypted(toPrint);
         return toPrint;
     }
+
+    @Override
+    public HashMap<?, ?> getCrypto() {
+        return crypto;
+    }
+
     @Override
     public String getPhraseForEncryption() {
         return super.getPhraseForEncryption();

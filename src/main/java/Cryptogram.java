@@ -7,13 +7,7 @@ import java.util.*;
 public abstract class Cryptogram {
 
     private String phrase;
-    private HashMap<Character, String> progressMap;
     private  String attempt;
-
-    public Cryptogram(HashMap<Character, String> progress) {
-        phrase = getPhraseForEncryption();
-        progressMap = progress;
-    }
 
     public Cryptogram() {
         this.phrase = getPhraseForEncryption();
@@ -26,6 +20,10 @@ public abstract class Cryptogram {
         Random rand = new Random();
         try {
             File myObj = new File("src/resources/phrases.txt");
+            if(myObj.length()==0){
+                System.out.println("No phrases");
+                System.exit(0);
+            }
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 numberOfStrings.add(myReader.nextLine());
@@ -67,4 +65,5 @@ public abstract class Cryptogram {
 
     public abstract String generateCryptogram();
     public abstract String printMethod(String phrase);
+    public abstract HashMap<?,?> getCrypto();
 }

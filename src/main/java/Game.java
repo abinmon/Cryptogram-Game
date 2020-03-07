@@ -1,4 +1,6 @@
 package main.java;
+import java.sql.SQLOutput;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -15,18 +17,29 @@ public class Game {
     private void playGame() {
         int whatPlace = 0;
         if (currentCryptogram == null)
-            currentCryptogram = generateCryptogram1();
+            currentCryptogram = cryptogramChoice();
         String printCrypto = currentCryptogram.generateCryptogram();
         int choice;
             while (true) {
                 try {
+                    if(!currentCryptogram.getWorkingPhrase().contains("#")){
+                        if(currentCryptogram.getWorkingPhrase().equals(currentCryptogram.getPhrase())){
+                            System.out.println();
+                            System.out.println("Well done");
+                            break;
+                        }
+                        else{
+                            System.out.println("You got the phrase wrong.");
+                        }
+                    }
                     System.out.println(printCrypto);
-                    System.out.println();
+                    System.out.println("=======================");
                     printDisplay(currentCryptogram.getWorkingPhrase(), whatPlace);
                     help();
                     Scanner reader = new Scanner(System.in);
                     choice = reader.nextInt();
                     System.out.println("You have chosen " + choice);
+
                     switch (choice) {
                         case 1:
                             this.enterLetter(whatPlace);
@@ -63,22 +76,27 @@ public class Game {
                             }
                             break;
                         case 6:
+                            System.out.println("Thanks for playing! GoodBye!");
                             System.exit(0);
                             break;
                         default:
                             System.out.println("Invalid option. Please try again!");
                             break;
                     }
-
-
                 } catch (InputMismatchException e) {
                     System.out.println();
                     System.out.println("=================Invalid option. Please try again!==============================");
-                    break;
                 }
 
             }
+        System.out.println();
+        System.out.println("Would you like to play another game. Enter 1 for yes, anything else for no.");
+        Scanner reader = new Scanner(System.in);
+        if(reader.nextInt() != 1){
+            System.exit(0);
         }
+        currentCryptogram = null;
+    }
 
     private static void printDisplay(String phrase, int whatPlace) {
         System.out.println(phrase);
@@ -88,7 +106,7 @@ public class Game {
         System.out.println("^");
     }
 
-    private Cryptogram generateCryptogram1() {
+    private Cryptogram cryptogramChoice() {
         boolean input_done = false;
         while(!input_done) {
             try {
@@ -104,7 +122,7 @@ public class Game {
                     input_done = true;
                 } else {
                     System.out.println("What you entered was neither 1 or 2, please input a valid answer.");
-                    return generateCryptogram1();
+                    return cryptogramChoice();
                 }
             } catch (InputMismatchException e) {
                 System.out.println();
@@ -116,21 +134,44 @@ public class Game {
         return currentCryptogram;
     }
 
+
+
     private void enterLetter(int whatLetter) {
+        if(helpCheck(whatLetter)){
+            System.out.println("What would you like to overwrite with?");
+        }
         Scanner reader = new Scanner(System.in);
-        currentLetter = reader.nextLine().toLowerCase();
+        currentLetter = reader.next().toLowerCase();
+        char c = currentLetter.charAt(0);
         System.out.println("current letter = " + currentLetter);
-        if (currentLetter.length()==1) {
-            currentCryptogram.changePhrase(currentLetter, whatLetter);
+        if(currentCryptogram.getCrypto().containsKey(c)){
+            if (currentLetter.length()==1) {
+                currentCryptogram.changePhrase(currentLetter, whatLetter);
+            }
+            else{
+                System.out.println("You did not enter a single letter.");
+            }
         }
-        else{
-            System.out.println("You did not enter a single letter.");
+        else {
+            System.out.println();
+            System.out.println("That letter is not in the phrase! Try Again!");
+            System.out.println();
         }
+
     }
 
     private void undoLetter(int whatLetter) {
-        System.out.println("Deleting letter: " + whatLetter);
         currentCryptogram.changePhrase("#", whatLetter);
+    }
+    private Boolean helpCheck(int whatLetter){
+        boolean ty = false;
+        if(!(currentCryptogram.getWorkingPhrase().charAt(whatLetter) == '#')){
+            System.out.println("Would you like to overwrite? type 1 for yes or 2 for no");
+            Scanner i = new Scanner(System.in);
+            int a = i.nextInt();
+            ty = a == 1;
+        }
+        return ty;
     }
 
 

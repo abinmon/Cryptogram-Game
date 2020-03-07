@@ -62,4 +62,7 @@ public class LetterCryptogram extends Cryptogram{
         encryptedPhrase = encrypted;
     }
 
+    public HashMap<Character, Character> getCrypto() {
+        return crypto;
+    }
 }
