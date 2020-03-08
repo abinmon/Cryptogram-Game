@@ -21,6 +21,7 @@ public class LetterCryptogram extends Cryptogram{
         Originalphrase = super.getPhraseForEncryption(fileName).toLowerCase();
     }
 
+
     @Override
     public String generateCryptogram() {
         Random rand = new Random();
