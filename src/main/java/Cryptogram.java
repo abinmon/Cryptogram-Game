@@ -20,7 +20,12 @@ public abstract class Cryptogram {
         attempt = "";
     }
 
-
+    /**
+     * this is a method where it gets the phrases from the  file and randomises it and encrypts the strings
+     * @param filename
+     * @return null
+     * if file file is not found a catch is thrown
+     */
     public String getPhraseForEncryption(String filename) {
         ArrayList<String> numberOfStrings = new ArrayList<>();
         Random rand = new Random();
@@ -46,6 +51,11 @@ public abstract class Cryptogram {
         return phrase;
     }
 
+    /**
+     *
+     * @param input
+     * @param whatPlace
+     */
     public void changePhrase(String input, int whatPlace) {
         String change = "";
         for (int i = 0; i < this.getPhrase().length(); i++) {

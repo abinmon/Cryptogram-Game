@@ -12,7 +12,7 @@ public class Game {
     private ArrayList<String> alreadyInput;
     private Player p = new Player("Player");
 
-    private Game() {
+    public Game() {
         input = new Scanner(System.in);
         currentLetter = null;
         alreadyInput = new ArrayList<>();
@@ -159,6 +159,7 @@ public class Game {
         Scanner reader = new Scanner(System.in);
         currentLetter = reader.next().toLowerCase();
         char c = currentLetter.charAt(0);
+        //Entered letter is c
         System.out.println("current letter = " + currentLetter);
         if (currentCryptogram.getCrypto().containsKey(c)) {
             if (currentLetter.length() == 1) {
@@ -184,8 +185,8 @@ public class Game {
         currentCryptogram.changePhrase("#", whatLetter);
         alreadyInput.remove(currentLetter);
     }
-
-    private Boolean helpCheck(int whatLetter){
+    //
+    public Boolean helpCheck(int whatLetter){
         boolean check = false;
         if(!(currentCryptogram.getWorkingPhrase().charAt(whatLetter) == '#')){
             System.out.println("Would you like to overwrite? type 1 for yes or 2 for no");
@@ -227,7 +228,7 @@ public class Game {
         }
         return alreadyEntered;
     }
-
+    //runs the Game
     public static void main(String[] args) {
         Game newGame = new Game();
         boolean exit = false;

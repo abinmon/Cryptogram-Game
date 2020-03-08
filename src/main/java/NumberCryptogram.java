@@ -19,6 +19,11 @@ public class NumberCryptogram extends Cryptogram{
         Originalphrase = super.getPhraseForEncryption(fileName).toLowerCase();
     }
 
+    /**
+     * This method gets the phrases from the file and generates them into randomised number
+     * each letter of the alphabet will be specified a random number
+     * @return printmethod
+     */
     @Override
     public String generateCryptogram() {
         Random rand = new Random();
