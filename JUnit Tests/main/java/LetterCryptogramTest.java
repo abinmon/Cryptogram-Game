@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LetterCryptogramTest {
     @Test
     void generateCryptogram() {
-        LetterCryptogram crypto = new LetterCryptogram();
+        LetterCryptogram crypto = new LetterCryptogram("src/resources/testPhraseFile.txt");
         // Test to check that alphabet is different
         String encryptedPhrase = crypto.generateCryptogram();
 
@@ -21,7 +21,13 @@ class LetterCryptogramTest {
         Character firstCharacterOfEncrypted = crypto.getEnryptedPhrase().charAt(0); // Gets the Encrypted Phrase
         assertNotEquals(firstChracterOfOriginal, firstCharacterOfEncrypted);
 
+        //The size of the hashmap should be 11 ignoring repeated values.
+        assertEquals(crypto.getCrypto().size(), 11);
 
+        //Testig to see if the getplainCharacter works
+       // System.out.println(crypto.getPlainChar('l'));
 
+        // this test shows the mapping
+        System.out.println(crypto.getCrypto());
     }
 }

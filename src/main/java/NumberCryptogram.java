@@ -25,9 +25,9 @@ public class NumberCryptogram extends Cryptogram{
         for (int i = 0; i < Originalphrase.length(); i++) {
             char characterAtPhrase = Originalphrase.charAt(i);
             if (!(crypto.containsKey(characterAtPhrase)) && characterAtPhrase >= 'a' && characterAtPhrase <= 'z') {
-                int encryptNumber = rand.nextInt(25)+1;
+                int encryptNumber = rand.nextInt(26)+1;
                 while(crypto.containsValue(encryptNumber)){
-                    encryptNumber = rand.nextInt(25)+1;
+                    encryptNumber = rand.nextInt(26)+1;
                 }
                 crypto.put(characterAtPhrase, encryptNumber);
             }
@@ -62,10 +62,32 @@ public class NumberCryptogram extends Cryptogram{
         return toPrint;
     }
 
+
+    public Character getPlainChar(int cryptoValue) {
+        char letterForKey = 'a';
+        char plainCHar = '\0';
+
+        if(crypto.containsValue(cryptoValue)){
+            for(int indexForMapping = 0; indexForMapping < 26; indexForMapping++){
+                if(crypto.containsValue(cryptoValue)){
+                    if(crypto.get(letterForKey).equals(cryptoValue)){
+                        plainCHar = letterForKey;
+                    }
+                }
+                letterForKey = (char) (letterForKey+1);
+            }
+        }
+        else{
+            System.out.println("No associated key to value");
+        }
+        return plainCHar;
+    }
+
     @Override
     public HashMap<?, ?> getCrypto() {
         return crypto;
     }
+
     public String getPhraseForEncryption() {
         return super.getPhraseForEncryption(BASE_QUOTES_FILE);
     }

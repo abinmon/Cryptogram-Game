@@ -35,11 +35,11 @@ public abstract class Cryptogram {
                 numberOfStrings.add(myReader.nextLine());
             }
             int size = rand.nextInt(numberOfStrings.size());
-            phrase = numberOfStrings.get(size);
+            return phrase = numberOfStrings.get(size);
         } catch (FileNotFoundException e) {
             System.out.println("File Not found!");
         }
-        return phrase;
+        return null;
     }
 
     public String getPhrase(){

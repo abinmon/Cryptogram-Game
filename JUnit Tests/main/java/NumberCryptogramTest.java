@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class NumberCryptogramTest {
     @Test
     void generateCryptogram() {
-        NumberCryptogram testPhrase = new NumberCryptogram();
+        NumberCryptogram testPhrase = new NumberCryptogram("src/resources/testPhraseFile.txt");
         //Getting an encrypted version of testPhrase
         String encryptedTestPhrase = testPhrase.generateCryptogram();
         //Testing if the original testPhrase is different from the encryptedTestPhrase that was made using the generateCryptogram() method
@@ -19,6 +19,17 @@ class NumberCryptogramTest {
         Character firstChracterTestPhrase = testPhrase.getPhrase().charAt(0); // Gets the original Phrase
         Character firstCharacterEncryptedTestPhrase = testPhrase.getEnryptedPhrase().charAt(0); // Gets the Encrypted Phrase
         assertNotEquals(firstChracterTestPhrase, firstCharacterEncryptedTestPhrase);
+
+
+        //The size of the hashmap should be 11 ignoring repeated values.
+        assertEquals(testPhrase.getCrypto().size(), 11);
+
+        //Testig to see if the getplainCharacter works
+        // System.out.println(testPhrase.getPlainChar(23));
+
+        // this test shows the mapping
+        System.out.println(testPhrase.getCrypto());
+
 
     }
 }

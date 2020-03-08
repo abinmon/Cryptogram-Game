@@ -57,6 +57,24 @@ public class LetterCryptogram extends Cryptogram{
         setEncrypted(toPrint);
         return toPrint;
     }
+
+    public Character getPlainChar(Character cryptoValue) {
+        char letterForKey = 'a';
+        char plainCHar = '\0';
+        if(crypto.containsValue(cryptoValue)){
+            for(int indexForMapping = 0; indexForMapping < 26; indexForMapping++){
+                    if(crypto.get(letterForKey).equals(cryptoValue)){
+                        plainCHar = letterForKey;
+                    }
+                letterForKey = (char) (letterForKey+1);
+            }
+        }
+        else{
+            System.out.println("No associated key to value");
+        }
+        return plainCHar;
+    }
+
     public String getPhraseForEncryption() {
         return super.getPhraseForEncryption(BASE_QUOTES_FILE);
     }
