@@ -1,1 +1,1 @@
-a file with some words in it
+test file with words

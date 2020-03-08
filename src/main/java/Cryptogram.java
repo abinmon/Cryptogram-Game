@@ -8,18 +8,24 @@ public abstract class Cryptogram {
 
     private String phrase;
     private  String attempt;
+    private final String BASE_QUOTES_FILE = "src/resources/phrases.txt";
 
     public Cryptogram() {
-        this.phrase = getPhraseForEncryption();
+        this.phrase = getPhraseForEncryption(BASE_QUOTES_FILE);
+        attempt = "";
+    }
+
+    public Cryptogram(String fileName) {
+        this.phrase = getPhraseForEncryption(fileName);
         attempt = "";
     }
 
 
-    public String getPhraseForEncryption() {
+    public String getPhraseForEncryption(String filename) {
         ArrayList<String> numberOfStrings = new ArrayList<>();
         Random rand = new Random();
         try {
-            File myObj = new File("src/resources/phrases.txt");
+            File myObj = new File(filename);
             if(myObj.length()==0){
                 System.out.println("No phrases");
                 System.exit(0);

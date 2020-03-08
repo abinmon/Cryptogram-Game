@@ -6,11 +6,19 @@ public class NumberCryptogram extends Cryptogram{
     private HashMap<Character, Integer> crypto;
     private String Originalphrase;
     private String encryptedPhrase;
+    private final String BASE_QUOTES_FILE = "src/resources/phrases.txt";
+
 
     public NumberCryptogram(){
         crypto = new HashMap<>();
-        Originalphrase = super.getPhrase().toLowerCase();
+        Originalphrase = super.getPhraseForEncryption(BASE_QUOTES_FILE).toLowerCase();
     }
+
+    public NumberCryptogram(String fileName){
+        crypto = new HashMap<>();
+        Originalphrase = super.getPhraseForEncryption(fileName).toLowerCase();
+    }
+
     @Override
     public String generateCryptogram() {
         Random rand = new Random();
@@ -58,10 +66,8 @@ public class NumberCryptogram extends Cryptogram{
     public HashMap<?, ?> getCrypto() {
         return crypto;
     }
-
-    @Override
     public String getPhraseForEncryption() {
-        return super.getPhraseForEncryption();
+        return super.getPhraseForEncryption(BASE_QUOTES_FILE);
     }
 
     public String getEnryptedPhrase(){

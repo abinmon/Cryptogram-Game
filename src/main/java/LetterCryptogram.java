@@ -6,11 +6,19 @@ public class LetterCryptogram extends Cryptogram{
     private HashMap<Character, Character> crypto;
     private String Originalphrase;
     private String encryptedPhrase;
+    private final String BASE_QUOTES_FILE = "src/resources/phrases.txt";
+
 
 
     public LetterCryptogram(){
+        super();
         crypto = new HashMap<>();
-        Originalphrase = super.getPhraseForEncryption().toLowerCase();
+        Originalphrase = super.getPhraseForEncryption(BASE_QUOTES_FILE).toLowerCase();
+    }
+
+    public LetterCryptogram(String fileName){
+        crypto = new HashMap<>();
+        Originalphrase = super.getPhraseForEncryption(fileName).toLowerCase();
     }
 
     @Override
@@ -49,10 +57,8 @@ public class LetterCryptogram extends Cryptogram{
         setEncrypted(toPrint);
         return toPrint;
     }
-
-    @Override
     public String getPhraseForEncryption() {
-        return super.getPhraseForEncryption();
+        return super.getPhraseForEncryption(BASE_QUOTES_FILE);
     }
 
     public String getEnryptedPhrase(){
