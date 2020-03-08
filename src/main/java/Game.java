@@ -10,6 +10,7 @@ public class Game {
     private Scanner input;
     private String currentLetter;
     private ArrayList<String> alreadyInput;
+    private Player p = new Player("Player");
 
     private Game() {
         input = new Scanner(System.in);
@@ -162,6 +163,7 @@ public class Game {
         if (currentCryptogram.getCrypto().containsKey(c)) {
             if (currentLetter.length() == 1) {
                 if (!letterCheck()) {
+                    p.incrementNumberOfCorrectGuesses();
                     alreadyInput.add(currentLetter);
                     currentCryptogram.changePhrase(currentLetter, whatLetter);
                 }
@@ -170,6 +172,7 @@ public class Game {
             }
         }
         else {
+            p.incrementTotalGuesses();
             System.out.println();
             System.out.println("That letter is not in the phrase! Try Again!");
             System.out.println();
@@ -198,7 +201,6 @@ public class Game {
         return check;
     }
 
-
     //Gives the user help by showing them the options they have
     private void help() {
         System.out.println("Help Section");
@@ -223,7 +225,6 @@ public class Game {
                 alreadyEntered = false;
             }
         }
-
         return alreadyEntered;
     }
 
@@ -231,13 +232,6 @@ public class Game {
         Game newGame = new Game();
         boolean exit = false;
         System.out.println("Hello");
-
         while (true) newGame.playGame();
-
-
     }
-
-
-
-
 }
