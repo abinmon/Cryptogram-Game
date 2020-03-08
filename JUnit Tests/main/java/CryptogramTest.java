@@ -32,7 +32,7 @@ class CryptogramTest {
     @Test
     void changePhraseTest(){
         Cryptogram crypto = new LetterCryptogram("src/resources/testPhraseFile.txt");
-        //This test is to see if the change Pharase method works... this is done by having getting the current phrase and chaning the second character to a and seeing if the character after at position 2 is the same as the changed letter.
+        //This test is to see if the change Phrase method works... this is done by having getting the current phrase and chaning the second character to a and seeing if the character after at position 2 is the same as the changed letter.
         crypto.setAttempt(crypto.getPhrase());
         crypto.changePhrase("a", 2);
 

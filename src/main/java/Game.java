@@ -109,6 +109,7 @@ public class Game {
         System.out.println("^");
     }
 
+    // Gives the user the choice between either a number or a letter cryptogram
     private Cryptogram cryptogramChoice() {
         boolean input_done = false;
         while(!input_done) {
@@ -137,8 +138,7 @@ public class Game {
         return currentCryptogram;
     }
 
-
-
+    //Lets the user choose which letter in the cryptogram they would like to overwrite
     private void enterLetter(int whatLetter) {
         boolean check = helpCheck(whatLetter);
         if(check){
@@ -153,6 +153,7 @@ public class Game {
            return;
          }
     }
+    //Overwrites the chosen letter with a new letter chosen by the user
     private void enterLetterHelper(int whatLetter){
         Scanner reader = new Scanner(System.in);
         currentLetter = reader.next().toLowerCase();
@@ -175,6 +176,7 @@ public class Game {
         }
     }
 
+    //Removes a chosen already guessed letter and replaced it with a #
     private void undoLetter(int whatLetter) {
         currentCryptogram.changePhrase("#", whatLetter);
         alreadyInput.remove(currentLetter);
@@ -197,6 +199,7 @@ public class Game {
     }
 
 
+    //Gives the user help by showing them the options they have
     private void help() {
         System.out.println("Help Section");
         System.out.println("Number description: ");
@@ -208,6 +211,7 @@ public class Game {
         System.out.println("Which option would you like.");
     }
 
+    //Used to check if the user has already entered a specific letter so that they can't enter that letter again
     private boolean letterCheck(){
         boolean alreadyEntered = false;
         for(int i = 0; i < alreadyInput.size(); i++){

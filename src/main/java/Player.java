@@ -16,6 +16,7 @@ public class Player{
         numCorrectGuesses = 0;
     }
 
+    //Method used to create a new player account.
     public Player(String name, int totalGuesses, int numberC, int numberP, int numCorrectGs){
         username = name;
         totalNumGuesses = totalGuesses;
@@ -24,6 +25,7 @@ public class Player{
         numCorrectGuesses = numCorrectGs;
     }
 
+    // Get and set methods for Players used to increment, change and display all parameters for a Player
     public String getUsername(){return username;}
     public void setUsername(String name) {username = name;}
     public int getNumberCompleted(){return numberCompleted;}
@@ -41,6 +43,7 @@ public class Player{
         totalNumGuesses++;
     }
 
+    //Updates the players accuracy depending on their current accuracy and the number of games played
     public void updateAccuracy(double lastRecAccuracy){
         if(numberPlayed == 1)
         {
@@ -54,6 +57,7 @@ public class Player{
         return accuracy;
     }
 
+    // Displays all the current statistics of a player
     public void displayStats(){
         System.out.println("Username: " + getUsername());
         System.out.println("Number of guesses: " + getTotalNumGuesses());
