@@ -22,7 +22,7 @@ class LetterCryptogramTest {
         assertNotEquals(firstChracterOfOriginal, firstCharacterOfEncrypted);
 
         //The size of the hashmap should be 11 ignoring repeated values.
-        assertEquals(crypto.getCrypto().size(), 11);
+        assertEquals(crypto.getCrypto().size(), 6);
 
         //Testig to see if the getplainCharacter works
        // System.out.println(crypto.getPlainChar('l'));

@@ -20,7 +20,7 @@ class CryptogramTest {
         assertNotNull(crypto.getPhraseForEncryption("src/resources/testPhraseFile.txt"));
 
         //The file only contains one sentence , so this test checks if the phrase that is returned from the getPhraseForEncryption is the same as the test file.
-        assertEquals(crypto.getPhrase(), "test file with words");
+        assertEquals("testfile", crypto.getPhrase());
 
         //Checking if the method returns null if the the file name is not specified
         assertNull(new LetterCryptogram("").getPhrase());

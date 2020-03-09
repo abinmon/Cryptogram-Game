@@ -22,7 +22,7 @@ class NumberCryptogramTest {
 
 
         //The size of the hashmap should be 11 ignoring repeated values.
-        assertEquals(testPhrase.getCrypto().size(), 11);
+        assertEquals(testPhrase.getCrypto().size(), 6);
 
         //Testig to see if the getplainCharacter works
         // System.out.println(testPhrase.getPlainChar(23));
