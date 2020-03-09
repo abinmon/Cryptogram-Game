@@ -17,7 +17,7 @@ public class Game {
         currentLetter = null;
         alreadyInput = new ArrayList<>();
     }
-
+// this methods shows the games mechanics
     private void playGame() {
         int whatPlace = 0;
         if (currentCryptogram == null)
@@ -180,14 +180,17 @@ public class Game {
         }
     }
 
-    //Removes a chosen already guessed letter and replaced it with a #
-    private void undoLetter(int whatLetter) {
+    //Removes a chosen already guessed letter and replaces it with a #
+    public void undoLetter(int whatLetter) {
         currentCryptogram.changePhrase("#", whatLetter);
         alreadyInput.remove(currentLetter);
     }
-    //
+    //This method gives a choice of overwriting an input or moving on to the next int
     public Boolean helpCheck(int whatLetter){
         boolean check = false;
+        Scanner i = new Scanner(System.in);
+        int a = i.nextInt();
+
         if(!(currentCryptogram.getWorkingPhrase().charAt(whatLetter) == '#')){
             System.out.println("Would you like to overwrite? type 1 for yes or 2 for no");
             Scanner i = new Scanner(System.in);
