@@ -225,7 +225,7 @@ public class Game {
         currentCryptogram.changePhrase("#", whatLetter);
         alreadyInput.remove(currentLetter);
     }
-    //
+    //This method gives a choice of overwriting an input or moving on to the next int
     public Boolean helpCheck(int whatLetter){
         boolean check = false;
         try {
