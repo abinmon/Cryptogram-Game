@@ -4,27 +4,47 @@ import java.util.Random;
 
 public class NumberCryptogram extends Cryptogram{
     private HashMap<Character, Integer> crypto;
-    private String phrase;
+    private String Originalphrase;
+    private String encryptedPhrase;
+    private final String BASE_QUOTES_FILE = "src/resources/phrases.txt";
+
 
     public NumberCryptogram(){
         crypto = new HashMap<>();
-        phrase = super.getPhrase().toLowerCase();
+        Originalphrase = super.getPhraseForEncryption(BASE_QUOTES_FILE).toLowerCase();
     }
+
+    public NumberCryptogram(String fileName){
+        crypto = new HashMap<>();
+        Originalphrase = super.getPhraseForEncryption(fileName).toLowerCase();
+    }
+
+    /**
+     * This method gets the phrases from the file and generates them into randomised number
+     * each letter of the alphabet will be specified a random number
+     * @return printmethod
+     */
     @Override
     public String generateCryptogram() {
         Random rand = new Random();
-        for (int i = 0; i < phrase.length(); i++) {
-            char characterAtPhrase = phrase.charAt(i);
+        for (int i = 0; i < Originalphrase.length(); i++) {
+            char characterAtPhrase = Originalphrase.charAt(i);
             if (!(crypto.containsKey(characterAtPhrase)) && characterAtPhrase >= 'a' && characterAtPhrase <= 'z') {
-                int encryptNumber = rand.nextInt(25)+1;
+                int encryptNumber = rand.nextInt(26)+1;
                 while(crypto.containsValue(encryptNumber)){
-                    encryptNumber = rand.nextInt(25)+1;
+                    encryptNumber = rand.nextInt(26)+1;
                 }
                 crypto.put(characterAtPhrase, encryptNumber);
             }
         }
-        return printMethod(phrase);
+        return printMethod(Originalphrase);
     }
+
+    /*
+   This method is used to get the encrypted phrase
+   @param String phrase - this is the originial phrase
+   @return String - returns the encrypted phrase
+    */
     @Override
     public String printMethod(String phrase){
         System.out.println();
@@ -49,6 +69,50 @@ public class NumberCryptogram extends Cryptogram{
                 }
             }
         }
+        setEncrypted(toPrint);
         return toPrint;
+    }
+
+
+    /*
+    This method is used to get the plain character from the hashmap
+    @param Character cryptoValue - passes in the hashed value
+    @return Character - returns the original mapping
+     */
+    public Character getPlainChar(int cryptoValue) {
+        char letterForKey = 'a';
+        char plainCHar = '\0';
+
+        if(crypto.containsValue(cryptoValue)){
+            for(int indexForMapping = 0; indexForMapping < 26; indexForMapping++){
+                if(crypto.containsValue(cryptoValue)){
+                    if(crypto.get(letterForKey).equals(cryptoValue)){
+                        plainCHar = letterForKey;
+                    }
+                }
+                letterForKey = (char) (letterForKey+1);
+            }
+        }
+        else{
+            System.out.println("No associated key to value");
+        }
+        return plainCHar;
+    }
+
+    @Override
+    public HashMap<?, ?> getCrypto() {
+        return crypto;
+    }
+
+    public String getPhraseForEncryption() {
+        return super.getPhraseForEncryption(BASE_QUOTES_FILE);
+    }
+
+    public String getEnryptedPhrase(){
+        return encryptedPhrase;
+    }
+
+    public void setEncrypted(String encrypted){
+        encryptedPhrase = encrypted;
     }
 }
