@@ -39,6 +39,12 @@ public class NumberCryptogram extends Cryptogram{
         }
         return printMethod(Originalphrase);
     }
+
+    /*
+   This method is used to get the encrypted phrase
+   @param String phrase - this is the originial phrase
+   @return String - returns the encrypted phrase
+    */
     @Override
     public String printMethod(String phrase){
         System.out.println();
@@ -68,6 +74,11 @@ public class NumberCryptogram extends Cryptogram{
     }
 
 
+    /*
+    This method is used to get the plain character from the hashmap
+    @param Character cryptoValue - passes in the hashed value
+    @return Character - returns the original mapping
+     */
     public Character getPlainChar(int cryptoValue) {
         char letterForKey = 'a';
         char plainCHar = '\0';
@@ -100,6 +111,7 @@ public class NumberCryptogram extends Cryptogram{
     public String getEnryptedPhrase(){
         return encryptedPhrase;
     }
+
     public void setEncrypted(String encrypted){
         encryptedPhrase = encrypted;
     }

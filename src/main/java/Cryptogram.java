@@ -23,7 +23,7 @@ public abstract class Cryptogram {
     /**
      * this is a method where it gets the phrases from the  file and randomises it and encrypts the strings
      * @param filename
-     * @return null
+     * @return String - which is the real string from the file
      * if file file is not found a catch is thrown
      */
     public String getPhraseForEncryption(String filename) {
@@ -52,7 +52,7 @@ public abstract class Cryptogram {
     }
 
     /**
-     *
+     *This method is called changing the working phrase when the user enters or deletes a letter
      * @param input
      * @param whatPlace
      */

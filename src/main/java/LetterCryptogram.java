@@ -22,6 +22,10 @@ public class LetterCryptogram extends Cryptogram{
     }
 
 
+    /*
+    This is the method which is called inorder to generate the encrypted letter phrase
+    @return String- this method returns the encrypted string
+     */
     @Override
     public String generateCryptogram() {
         Random rand = new Random();
@@ -42,6 +46,12 @@ public class LetterCryptogram extends Cryptogram{
         return printMethod(Originalphrase);
     }
 
+    /*
+    This method is used to get the encrypted phrase
+    @param String phrase - this is the originial phrase
+    @return String - returns the encrypted phrase
+     */
+    @Override
     public String printMethod(String phrase){
         System.out.println();
         String toPrint = "";
@@ -59,6 +69,11 @@ public class LetterCryptogram extends Cryptogram{
         return toPrint;
     }
 
+    /*
+    This method is used to get the plain character from the hashmap
+    @param Character cryptoValue - passes in the hashed value
+    @return Character - returns the original mapping
+     */
     public Character getPlainChar(Character cryptoValue) {
         char letterForKey = 'a';
         char plainCHar = '\0';

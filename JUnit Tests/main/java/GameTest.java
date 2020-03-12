@@ -1,11 +1,12 @@
 package main.java;
-import org.junit.Before;
+
+
 import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.UnsupportedEncodingException;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 
 class GameTest {
 
@@ -81,8 +82,6 @@ class GameTest {
         g.undoLetter(0);
         assertEquals('#', g.getCurrentCryptogram().getWorkingPhrase().charAt(0));
     }
-
-
 
     private void mimicInput(String input) throws UnsupportedEncodingException {
         ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());

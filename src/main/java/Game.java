@@ -10,7 +10,7 @@ public class Game {
     private Scanner input;
     private String currentLetter;
     private ArrayList<String> alreadyInput;
-    private Player p;
+    private Player player;
     private final String BASE_QUOTES_FILE = "src/resources/phrases.txt";
 
 
@@ -18,23 +18,26 @@ public class Game {
         input = new Scanner(System.in);
         currentLetter = null;
         alreadyInput = new ArrayList<>();
-        p = new Player("Player1");
+        player = new Player("Player1");
     }
 
     public Game(String playerName , String fileName){
         input = new Scanner(System.in);
         currentLetter = null;
         alreadyInput = new ArrayList<>();
-        p = new Player(playerName);
+        player = new Player(playerName);
     }
 
     public Game(Player player){
         input = new Scanner(System.in);
         currentLetter = null;
         alreadyInput = new ArrayList<>();
-        p = player;
+        this.player = player;
     }
-
+    /*
+    Play game method which is the main method for playing the game
+    @param int type
+     */
     public void playGame(int type) {
         int whatPlace = 0;
         if (currentCryptogram == null)
@@ -47,7 +50,7 @@ public class Game {
                     if(currentCryptogram.getWorkingPhrase().equals(currentCryptogram.getPhrase())){
                         System.out.println();
                         System.out.println("Well done");
-                        p.incrementNumberCompleted();
+                        player.incrementNumberCompleted();
                         break;
                     }
                     else{
@@ -100,6 +103,11 @@ public class Game {
         currentCryptogram = null;
     }
 
+    /*
+    This method prints out the cursor
+    @param String phrase the whole phrase
+    @param int what place - the position of the cursor
+     */
     public static void printDisplay(String phrase, int whatPlace) {
         System.out.println(phrase);
         for (int i = 0; i < whatPlace; i++) {
@@ -108,6 +116,11 @@ public class Game {
         System.out.println("^");
     }
 
+    /*
+    This method mves the cursor forward
+    @param int whatPlace the position of the cursor
+    @return int which is the next position on the string
+     */
     public int moveCursorForward(int whatPlace){
         int place;
         if (whatPlace >= currentCryptogram.getWorkingPhrase().length() - 1) {
@@ -123,7 +136,11 @@ public class Game {
         }
         return place;
     }
-
+     /*
+    This method moves the cursor backwards
+    @param int whatPlace the position of the cursor
+    @return int which is the previous position on the string
+     */
     public int moveCursorBackward(int whatPlace){
         int place;
         if (whatPlace == 0) {
@@ -140,8 +157,13 @@ public class Game {
         return place;
     }
 
-    // Gives the user the choice between either a number or a letter cryptogram
+    /* Gives the user the choice between either a number or a letter cryptogram
+    @param int userInput -  the user's choice
+    @param String fileName -  the name of the file the phrases are located at
+    @return Cryptogram - returns a cryptogram based on the users choice
+    * */
     public Cryptogram cryptogramChoice(int userInput, String fileName) {
+
         boolean input_done = false;
         while(!input_done) {
             try {
@@ -167,7 +189,9 @@ public class Game {
         return currentCryptogram;
     }
 
-    //Lets the user choose which letter in the cryptogram they would like to overwrite
+    /*Lets the user choose which letter in the cryptogram they would like to overwrite
+    @param int whatLetter - enters a letter based on the position of the cursor
+    * */
     public void enterLetter(int whatLetter) {
         if(((currentCryptogram.getWorkingPhrase().charAt(whatLetter) >'z') || (currentCryptogram.getWorkingPhrase().charAt(whatLetter) <'a'))&&(!(currentCryptogram.getWorkingPhrase().charAt(whatLetter) == '#'))){
             System.out.println("------------------");
@@ -187,20 +211,25 @@ public class Game {
             }
         }
     }
+    /*
+    This method check if the entered letter is correct to the letter compared to the corresponding phrase
+    @param int whatLetter - the position of the letter
+     */
     public void checkCorrect(int whatLetter){
         if((currentCryptogram.getWorkingPhrase().charAt(whatLetter))== currentCryptogram.getPhrase().charAt(whatLetter)){
-            p.incrementNumberOfCorrectGuesses();
+            player.incrementNumberOfCorrectGuesses();
         }
         else if((currentCryptogram.getWorkingPhrase().contains(currentLetter))){
-            p.incrementTotalGuesses();
+            player.incrementTotalGuesses();
         }
     }
-    //Overwrites the chosen letter with a new letter chosen by the user
+    /*Overwrites the chosen letter with a new letter chosen by the user
+    @param what letter- position of the letter
+    * */
     public void enterLetterHelper(int whatLetter){
         Scanner reader = new Scanner(System.in);
         currentLetter = reader.next().toLowerCase();
         char c = currentLetter.charAt(0);
-        //Entered letter is c
         System.out.println("current letter = " + currentLetter);
         if (currentCryptogram.getCrypto().containsKey(c)) {
             if (currentLetter.length() == 1) {
@@ -220,12 +249,19 @@ public class Game {
         }
     }
 
-    //Removes a chosen already guessed letter and replaced it with a #
+    /*Removes a chosen already guessed letter and replaced it with a #
+    @param int whatLetter - position of the letter
+    * */
     public void undoLetter(int whatLetter) {
+
         currentCryptogram.changePhrase("#", whatLetter);
         alreadyInput.remove(currentLetter);
     }
-    //This method gives a choice of overwriting an input or moving on to the next int
+    /*This method gives a choice of overwriting an input or moving on to the next int
+    @param int whatLetter - checks to see if the user wants to overwrite or not
+
+    @return Boolean - returns true if the user wants to overwrite else false.
+    * */
     public Boolean helpCheck(int whatLetter){
         boolean check = false;
         try {
@@ -248,7 +284,9 @@ public class Game {
         return check;
     }
 
-    //Gives the user help by showing them the options they have
+    /*
+    Gives the user help by showing them the options they have
+     */
     private void help() {
         System.out.println("Help Section");
         System.out.println("Number description: ");
@@ -260,7 +298,9 @@ public class Game {
         System.out.println("Which option would you like.");
     }
 
-    //Used to check if the user has already entered a specific letter so that they can't enter that letter again
+    /*Used to check if the user has already entered a specific letter so that they can't enter that letter again
+    @return Boolean - checks if the letter to entered
+    * */
     public boolean letterCheck(){
         boolean alreadyEntered = false;
         for(int i = 0; i < alreadyInput.size(); i++){
@@ -284,10 +324,12 @@ public class Game {
     }
 
     public Player getP() {
-        return p;
+        return player;
     }
 
-    //runs the Game
+    /*runs the Game
+
+     */
     public static void main(String[] args) {
         Game newGame = new Game("John", "src/resources/phrases.txt" );
         System.out.println("Hello");
