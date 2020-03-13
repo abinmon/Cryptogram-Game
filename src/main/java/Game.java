@@ -1,9 +1,13 @@
 package main.java;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
 
 public class Game {
     private Cryptogram currentCryptogram;
@@ -11,6 +15,7 @@ public class Game {
     private String currentLetter;
     private ArrayList<String> alreadyInput;
     private Player player;
+    private String printCrypto;
     private final String BASE_QUOTES_FILE = "src/resources/phrases.txt";
 
 
@@ -18,6 +23,7 @@ public class Game {
         input = new Scanner(System.in);
         currentLetter = null;
         alreadyInput = new ArrayList<>();
+        printCrypto = "";
         player = new Player("Player1");
     }
 
@@ -25,6 +31,7 @@ public class Game {
         input = new Scanner(System.in);
         currentLetter = null;
         alreadyInput = new ArrayList<>();
+        printCrypto = "";
         player = new Player(playerName);
     }
 
@@ -33,6 +40,7 @@ public class Game {
         currentLetter = null;
         alreadyInput = new ArrayList<>();
         this.player = player;
+        printCrypto = "";
     }
     /*
     Play game method which is the main method for playing the game
@@ -42,7 +50,7 @@ public class Game {
         int whatPlace = 0;
         if (currentCryptogram == null)
             currentCryptogram = cryptogramChoice(type, BASE_QUOTES_FILE);
-        String printCrypto = currentCryptogram.generateCryptogram();
+        printCrypto = currentCryptogram.generateCryptogram();
         int choice;
         while (true) {
             try {
@@ -84,6 +92,9 @@ public class Game {
                         System.out.println("Thanks for playing! GoodBye!");
                         System.exit(0);
                         break;
+                    case 7:
+                        saveGameHelper(player.getUsername()+"1",reader);
+                        break;
                     default:
                         System.out.println("Invalid option. Please try again!");
                         break;
@@ -116,11 +127,43 @@ public class Game {
         System.out.println("^");
     }
 
-    /*
-    This method mves the cursor forward
-    @param int whatPlace the position of the cursor
-    @return int which is the next position on the string
-     */
+
+    public void saveGameHelper(String fileName, Scanner in) {
+        File f = new File(fileName);
+        if(f.exists()){
+            System.out.println("Would you like to overwrite?");
+            System.out.println("Type 1 for yes or 2 for no");
+            if(in.hasNextInt()){
+                if(in.nextInt() == 1){
+                    BufferedWriter bw;
+                    String toSave="", crypto="";
+                    // Form output
+                    toSave += player.getUsername()+"|";
+                    toSave += currentCryptogram.getCrypto()+"|";
+                    toSave += currentCryptogram.getPhrase()+"|";
+                    toSave += currentCryptogram.getAttempt()+"|";
+                    toSave += getPrintCrypto()+"|";
+                    toSave += "\n";
+                    // Rewrite all saves to file
+                    try {
+                        bw = new BufferedWriter(new FileWriter(f, false));
+                        bw.write(toSave);
+                        bw.close();
+                    }catch(Exception e) {
+                        System.out.println("Issue saving file");
+                    }
+                }
+                else{
+                    System.out.println("Not overwritten");
+                }
+            }
+            else{
+                in.next();
+                saveGameHelper(fileName,in);
+            }
+        }
+    }
+
     public int moveCursorForward(int whatPlace){
         int place;
         if (whatPlace >= currentCryptogram.getWorkingPhrase().length() - 1) {
@@ -163,7 +206,6 @@ public class Game {
     @return Cryptogram - returns a cryptogram based on the users choice
     * */
     public Cryptogram cryptogramChoice(int userInput, String fileName) {
-
         boolean input_done = false;
         while(!input_done) {
             try {
@@ -223,9 +265,14 @@ public class Game {
             player.incrementTotalGuesses();
         }
     }
+
+    public String getPrintCrypto() {
+        return printCrypto;
+    }
+
     /*Overwrites the chosen letter with a new letter chosen by the user
-    @param what letter- position of the letter
-    * */
+            @param what letter- position of the letter
+            * */
     public void enterLetterHelper(int whatLetter){
         Scanner reader = new Scanner(System.in);
         currentLetter = reader.next().toLowerCase();
@@ -253,7 +300,6 @@ public class Game {
     @param int whatLetter - position of the letter
     * */
     public void undoLetter(int whatLetter) {
-
         currentCryptogram.changePhrase("#", whatLetter);
         alreadyInput.remove(currentLetter);
     }
@@ -327,8 +373,8 @@ public class Game {
         return player;
     }
 
-    /*runs the Game
-
+    /*
+    runs the Game
      */
     public static void main(String[] args) {
         Game newGame = new Game("John", "src/resources/phrases.txt" );
